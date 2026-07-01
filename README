@@ -27,3 +27,9 @@ cartographer 仿真验证
             底盘：差速底盘(两个主动轮+一个从动轮) --相关参数对应advanced_robot.urdf.xacro文件中<!-- Differential Drive Plugin --> 部分
             IMU:惯性测量单元--相关参数对应advanced_robot.urdf.xacro文件中<!-- IMU Plugin --> 部分
             odom:里程计--相关参数对应advanced_robot.urdf.xacro文件中<!-- Odometry Plugin --> 部分
+
+
+    存在的问题：
+        1、导航时3d雷达截取的太高,导致看不到树根等障碍物;
+
+        
