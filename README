@@ -1,0 +1,29 @@
+cartographer 仿真验证
+    程序运行及介绍：
+        1、建图模式--使用了config中的cartographer_3d_2d.lua配置文件 机器人模型为advanced_robot.urdf.xacro文件:
+
+            ros2 launch campus_simulation cartographer_mapping.launch.py (该仿真场景为室外空旷场地的场景)
+            ros2 launch campus_simulation cartographer_mapping_indoor.launch.py (该仿真场景为室外+室内场景)
+
+
+        2、保存地图命令--一般保存到maps文件夹下(下面导航模式中的launch文件对应了其路径位置,如需修改请连同导航的launch文件一起修改):
+            ros2 run nav2_map_server map_saver_cli -f ~/qirui/robot/carto_slam_ws/src/campus_simulation/maps/carto_2d_map(最后一个是文件名称，根据需要修改) 
+
+            ros2 service call /write_state cartographer_ros_msgs/srv/WriteState "{filename: '/home/zzl/qirui/robot/carto_slam_ws/src/campus_simulation/maps/carto_2d_map.pbstream'}" (carto_2d_map.pbstream尽量与上述保存的文件名一致)
+
+
+
+        3、导航模式--定位使用了config中的cartographer_localization.lua配置文件,导航使用了config中的nav2_config.yaml文件, 机器人模型为advanced_robot.urdf.xacro文件:
+
+            ros2 launch campus_simulation carto_localization_nav2.launch.py (该仿真场景目前为室外+室外空旷场地的场景)
+
+
+
+        4、仿真世界场景放置在worlds文件夹下,如需修改可在对应文件中进行配置;
+
+        5、仿真机器人模型放置在urdf文件夹下,如需修改可在对应文件中进行配置;目前配置如下：
+            雷达:16线的3D雷达--相关参数对应advanced_robot.urdf.xacro文件中<!-- 3D LiDAR Plugin (16-channel) --> 部分
+            相机:rgbd深度相机--相关参数对应advanced_robot.urdf.xacro文件中<!-- RGBD Camera Plugin --> 部分
+            底盘：差速底盘(两个主动轮+一个从动轮) --相关参数对应advanced_robot.urdf.xacro文件中<!-- Differential Drive Plugin --> 部分
+            IMU:惯性测量单元--相关参数对应advanced_robot.urdf.xacro文件中<!-- IMU Plugin --> 部分
+            odom:里程计--相关参数对应advanced_robot.urdf.xacro文件中<!-- Odometry Plugin --> 部分
